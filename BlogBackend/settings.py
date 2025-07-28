@@ -190,7 +190,8 @@ AWS_QUERYSTRING_AUTH = False # Set to True for private files requiring signed UR
 
 # Static files configuration
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-STATIC_URL = AWS_S3_ENDPOINT_URL + '/' + AWS_STORAGE_BUCKET_NAME + '/static/'
+STATIC_URL = AWS_S3_ENDPOINT_URL + '/static/'
+#'/' + AWS_STORAGE_BUCKET_NAME + 
 
 # Media files configuration
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
