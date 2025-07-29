@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'users',
 ]
 
+AWS_QUERYSTRING_AUTH = False
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
