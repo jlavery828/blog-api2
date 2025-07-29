@@ -216,6 +216,10 @@ AWS_S3_OBJECT_PARAMETERS = {
 }
 AWS_QUERYSTRING_AUTH = False
 
+# 1. Static/Media URL
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
+
 # ⬇️ Now define these
 STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
 DEFAULT_FILE_STORAGE = 'BlogBackend.storage_backends.MediaStorage'
