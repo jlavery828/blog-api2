@@ -226,8 +226,8 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400', # Optional: Set cache control
 }
 AWS_QUERYSTRING_AUTH = False # Set to True for private files requiring signed URLs
-STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
-DEFAULT_FILE_STORAGE = 'BlogBackend.storage_backends.MediaStorage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Static files configuration
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
