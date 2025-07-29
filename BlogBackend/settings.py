@@ -217,8 +217,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AWS_S3_CUSTOM_DOMAIN = "codetitan.nyc3.cdn.digitaloceanspaces.com"
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
-DEFAULT_FILE_STORAGE = 'BlogBackend.storage_backends.MediaStorage'
+
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
@@ -227,6 +226,8 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400', # Optional: Set cache control
 }
 AWS_QUERYSTRING_AUTH = False # Set to True for private files requiring signed URLs
+STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
+DEFAULT_FILE_STORAGE = 'BlogBackend.storage_backends.MediaStorage'
 
 # Static files configuration
 #STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
