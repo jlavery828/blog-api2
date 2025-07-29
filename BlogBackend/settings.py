@@ -45,6 +45,35 @@ INSTALLED_APPS = [
     'users',
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'debug.log'),  # output file path
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'boto3': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'botocore': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
 AUTH_USER_MODEL = 'users.CustomUser'
 
 REST_FRAMEWORK = {
@@ -180,7 +209,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # DigitalOcean Spaces configuration
-AWS_S3_CUSTOM_DOMAIN = "codetitan.nyc3.digitaloceanspaces.com"
+AWS_S3_CUSTOM_DOMAIN = "codetitan.nyc3.cdn.digitaloceanspaces.com"
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
