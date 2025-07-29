@@ -20,7 +20,7 @@ urlpatterns = router.urls + posts_router.urls
 urlpatterns += [
     path('me/', me),
     path('logout/', logout),
-    path('posts/<int:pk>/', PostDetailAPIView.as_view(), name="post-detail"),
-    path('post/create/', PostCreateAPIView.as_view(), name='post-create'),
-    path('post/<int:pk>/update/', PostUpdateAPIView.as_view(), name='post-update'),
+    path('posts/<int:pk>/', PostDetailAPIView.as_view()),
+    path('post/create/', PostCreateAPIView.as_view()),
+    path('post/<int:pk>/update/', PostUpdateAPIView.as_view()),
 ]
