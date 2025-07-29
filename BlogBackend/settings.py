@@ -168,22 +168,6 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # SvelteKit dev server
 ]
 
-CKEDITOR_UPLOAD_PATH = 'uploads/'
-
-CKEDITOR5_CONFIGS = {
-    'default': {
-        'toolbar': [
-            'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList',
-            '|', 'blockQuote', 'insertTable', 'undo', 'redo'
-        ],
-        'height': 300,
-        'width': '100%',
-    },
-    'extends': {
-        'toolbar': 'full',
-    }
-}
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
@@ -227,3 +211,19 @@ AWS_QUERYSTRING_AUTH = False
 # ⬇️ Now define these
 STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
 DEFAULT_FILE_STORAGE = 'BlogBackend.storage_backends.MediaStorage'
+
+CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+CKEDITOR5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList',
+            '|', 'blockQuote', 'insertTable', 'undo', 'redo'
+        ],
+        'height': 300,
+        'width': '100%',
+    },
+    'extends': {
+        'toolbar': 'full',
+    }
+}
