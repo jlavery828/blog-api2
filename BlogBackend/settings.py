@@ -180,7 +180,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # DigitalOcean Spaces configuration
-AWS_S3_CUSTOM_DOMAIN = "codetitan.nyc3.cdn.digitaloceanspaces.com"
+AWS_S3_CUSTOM_DOMAIN = "codetitan.nyc3.digitaloceanspaces.com"
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
