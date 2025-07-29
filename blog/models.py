@@ -35,6 +35,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     featured_image = models.ImageField(upload_to='post_images/', null=True, blank=True)
     slug = models.SlugField(unique=True, blank=True)
+    markdown = models.TextField('Post Markdown content', blank=True)
     content = RichTextField('Post content')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
