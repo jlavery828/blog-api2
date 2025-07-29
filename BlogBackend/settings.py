@@ -4,10 +4,18 @@ from datetime import timedelta
 from django.apps import apps
 from pathlib import Path
 
+from django.core.files.storage import default_storage
+from BlogBackend.storage_backends import MediaStorage
+
 from dotenv import load_dotenv
 
 # Load variables from .env file
 load_dotenv()
+
+# Force override if needed
+if not isinstance(default_storage, MediaStorage):
+    import django.core.files.storage
+    django.core.files.storage.default_storage = MediaStorage()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -185,7 +193,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 #STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # or any path you prefer
+#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # or any path you prefer
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
