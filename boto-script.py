@@ -1,6 +1,10 @@
 import os
 import boto3
 import logging
+from dotenv import load_dotenv
+
+# Load variables from .env file
+load_dotenv()
 
 
 # Enable logging globally for boto3, botocore, s3transfer
