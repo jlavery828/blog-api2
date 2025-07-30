@@ -36,7 +36,7 @@ class Post(models.Model):
     featured_image = models.ImageField(upload_to='post_images/', null=True, blank=True)
     slug = models.SlugField(unique=True, blank=True)
     markdown = models.TextField('Post Markdown content', blank=True)
-    content = RichTextField('Post content')
+    content = RichTextField('Post content', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='posts')
