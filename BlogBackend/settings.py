@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-)=!$%b+9iyy1f=+x8fcnohp_&iu8e4&1k72nb(w7p*9*#6gt-%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [os.getenv('DOMAIN_1'), os.getenv('IP_1'), 'localhost', os.getenv('FRONT_END_IP')]
+ALLOWED_HOSTS = [os.getenv('DOMAIN_1'), os.getenv('IP_1'), 'localhost', '127.0.0.1', os.getenv('FRONT_END_IP')]
 
 # Application definition
 
@@ -42,9 +42,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'ckeditor',
-    'ckeditor_uploader',  # If you want file/image uploads
-    # 'ckeditor5',
     'corsheaders',
     'django_extensions',
     'rest_framework',
@@ -52,8 +49,6 @@ INSTALLED_APPS = [
     'blog',
     'users',
 ]
-
-AWS_QUERYSTRING_AUTH = False
 
 LOGGING = {
     'version': 1,
@@ -226,18 +221,3 @@ MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
 DEFAULT_FILE_STORAGE = 'BlogBackend.storage_backends.MediaStorage'
 
-CKEDITOR_UPLOAD_PATH = 'uploads/'
-
-CKEDITOR5_CONFIGS = {
-    'default': {
-        'toolbar': [
-            'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList',
-            '|', 'blockQuote', 'insertTable', 'undo', 'redo'
-        ],
-        'height': 300,
-        'width': '100%',
-    },
-    'extends': {
-        'toolbar': 'full',
-    }
-}
