@@ -199,6 +199,8 @@ class PostCreateAPIView(generics.CreateAPIView):
 class PostUpdateAPIView(generics.RetrieveUpdateAPIView):
     queryset = Post.objects.all()
     parser_classes = [MultiPartParser, FormParser]
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
     def patch(self, request, pk):
         try:
