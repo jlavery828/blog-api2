@@ -201,6 +201,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 #MEDIA_ROOT = BASE_DIR / 'media'
 
 
+# ⬇️ Now define these
+STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
+DEFAULT_FILE_STORAGE = 'BlogBackend.storage_backends.MediaStorage'
 
 # DigitalOcean Spaces configuration
 AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
@@ -217,7 +220,4 @@ AWS_QUERYSTRING_AUTH = False
 STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
 
-# ⬇️ Now define these
-STATICFILES_STORAGE = 'BlogBackend.storage_backends.StaticStorage'
-DEFAULT_FILE_STORAGE = 'BlogBackend.storage_backends.MediaStorage'
 

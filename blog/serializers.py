@@ -38,4 +38,10 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
 
+    def update(self, instance, validated_data):
+        featured_image = self.context['request'].FILES.get('featured_image')
+        if featured_image:
+            instance.featured_image = featured_image
+        return super().update(instance, validated_data)
+
 

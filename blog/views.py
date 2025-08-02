@@ -1,4 +1,12 @@
+import datetime
+import boto3
+
+from botocore.exceptions import NoCredentialsError, ClientError
 from django.shortcuts import render, get_object_or_404
+from django.conf import settings
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from django.http import JsonResponse
 from rest_framework import generics, viewsets, permissions, serializers, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.parsers import MultiPartParser, FormParser
@@ -11,6 +19,69 @@ from rest_framework.views import APIView
 from .models import Post, PostImage, Category, Tag, Comment
 from .permissions import IsAuthorOrReadOnly
 from .serializers import PostSerializer, PostImageSerializer, CategorySerializer, TagSerializer, CommentSerializer
+
+
+def test_upload_to_spaces(request):
+    now = datetime.datetime.utcnow().isoformat()
+    filename = f"test_upload_{now}.txt"
+    content = ContentFile(b"This is a test upload to DigitalOcean Spaces.")
+    
+    try:
+        file_path = default_storage.save(filename, content)
+        file_url = default_storage.url(file_path)
+        return JsonResponse({
+            "success": True,
+            "file_path": file_path,
+            "file_url": file_url
+        })
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "error": str(e)
+        })
+    
+def test_s3_credentials(request):
+    try:
+        s3 = boto3.client(
+            's3',
+            aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
+            endpoint_url=settings.AWS_S3_ENDPOINT_URL,
+        )
+
+        # List first 5 objects in bucket
+        objects = s3.list_objects_v2(
+            Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+            MaxKeys=5
+        )
+
+        # Upload a small test object
+        test_key = 'test_s3_credentials.txt'
+        s3.put_object(
+            Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+            Key=test_key,
+            Body=b"This is a test file from Django"
+        )
+
+        # # (Optional) Delete test object
+        # s3.delete_object(
+        #     Bucket=settings.AWS_STORAGE_BUCKET_NAME,
+        #     Key=test_key
+        # )
+
+        return JsonResponse({
+            'success': True,
+            'message': 'S3 credentials are valid.',
+            'sample_objects': objects.get('Contents', [])
+        })
+
+    except NoCredentialsError:
+        return JsonResponse({'success': False, 'error': 'No S3 credentials found'})
+    except ClientError as e:
+        return JsonResponse({'success': False, 'error': str(e)})
+    except Exception as e:
+        return JsonResponse({'success': False, 'error': f'Unexpected error: {str(e)}'})
+    
 
 
 class SimpleTokenObtainPairView(TokenObtainPairView):
