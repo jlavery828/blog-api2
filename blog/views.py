@@ -197,6 +197,7 @@ class PostCreateAPIView(generics.CreateAPIView):
     
 
 class PostUpdateAPIView(generics.RetrieveUpdateAPIView):
+    queryset = Post.objects.all()
     parser_classes = [MultiPartParser, FormParser]
 
     def patch(self, request, pk):
