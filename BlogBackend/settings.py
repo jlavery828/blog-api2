@@ -4,8 +4,8 @@ from datetime import timedelta
 from django.apps import apps
 from pathlib import Path
 
-from django.core.files.storage import default_storage
-from BlogBackend.storage_backends import MediaStorage
+# from django.core.files.storage import default_storage
+# from BlogBackend.storage_backends import MediaStorage
 
 from dotenv import load_dotenv
 
@@ -13,9 +13,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Force override if needed
-if not isinstance(default_storage, MediaStorage):
-    import django.core.files.storage
-    django.core.files.storage.default_storage = MediaStorage()
+# if not isinstance(default_storage, MediaStorage):
+#     import django.core.files.storage
+#     django.core.files.storage.default_storage = MediaStorage()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
