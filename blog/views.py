@@ -197,37 +197,51 @@ class PostCreateAPIView(generics.CreateAPIView):
     
 
 class PostUpdateAPIView(generics.RetrieveUpdateAPIView):
-    queryset = Post.objects.all()
-    serializer_class = PostSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
-    def perform_update(self, serializer):
-        post = serializer.instance
+    def patch(self, request, pk):
+        try:
+            post = Post.objects.get(pk=pk)
+        except Post.DoesNotExist:
+            return Response({"error": "Not found"}, status=404)
 
-        # Optional: restrict updates to post author
-        if self.request.user != serializer.instance.author:
-            raise permissions.PermissionDenied("You can only edit your own posts.")
-        updated_post = serializer.save()
+        serializer = PostSerializer(post, data=request.data, partial=True, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
 
-        # Don't clear tags — just add new ones
-        submitted_tags = self.request.data.getlist('tags')
+    # queryset = Post.objects.all()
+    # serializer_class = PostSerializer
+    # permission_classes = [permissions.IsAuthenticated]
 
-        for tag_name in submitted_tags:
-            tag_name = tag_name.strip()
-            if not tag_name:
-                continue
-            tag, _ = Tag.objects.get_or_create(name=tag_name)
+    # # def perform_update(self, serializer):
+    # #     post = serializer.instance
 
-            if tag not in post.tags.all():
-                post.tags.add(tag)
+    # #     # Optional: restrict updates to post author
+    # #     if self.request.user != serializer.instance.author:
+    # #         raise permissions.PermissionDenied("You can only edit your own posts.")
+    # #     updated_post = serializer.save()
 
-        # Handle new images
-        new_images = self.request.FILES.getlist('images')
-        if new_images:
-            if updated_post.images.count() + len(new_images) > 10:
-                raise serializers.ValidationError("Maximum of 10 images allowed.")
-            for image in new_images:
-                PostImage.objects.create(post=updated_post, image=image)
+    # #     # Don't clear tags — just add new ones
+    # #     submitted_tags = self.request.data.getlist('tags')
+
+    # #     for tag_name in submitted_tags:
+    # #         tag_name = tag_name.strip()
+    # #         if not tag_name:
+    # #             continue
+    # #         tag, _ = Tag.objects.get_or_create(name=tag_name)
+
+    # #         if tag not in post.tags.all():
+    # #             post.tags.add(tag)
+
+    # #     # Handle new images
+    # #     new_images = self.request.FILES.getlist('images')
+    # #     if new_images:
+    # #         if updated_post.images.count() + len(new_images) > 10:
+    # #             raise serializers.ValidationError("Maximum of 10 images allowed.")
+    # #         for image in new_images:
+    # #             PostImage.objects.create(post=updated_post, image=image)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
