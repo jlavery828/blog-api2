@@ -227,7 +227,7 @@ AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
 
 # 1. Static/Media URL
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/static/"
+STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/codetitan/static/"
 MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/codetitan/media/"
 
 
