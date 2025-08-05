@@ -206,7 +206,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STORAGES = {
     "default": {
         "BACKEND": "BlogBackend.storage_backends.MediaStorage",
-        "STATICFILES_STORAGE" : "BlogBackend.storage_backends.StaticStorage"
+    },
+    "staticfiles": {
+        "BACKEND": "BlogBackend.storage_backends.StaticStorage",
     },
 }
 
