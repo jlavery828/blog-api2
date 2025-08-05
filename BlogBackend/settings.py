@@ -222,6 +222,7 @@ AWS_S3_CUSTOM_DOMAIN = "codetitan.nyc3.cdn.digitaloceanspaces.com"
 AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
+AWS_DEFAULT_ACL = 'public-read'
 AWS_QUERYSTRING_AUTH = False
 
 # 1. Static/Media URL
