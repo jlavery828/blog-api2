@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedDefaultRouter
-from .views import test_upload_to_spaces, test_s3_credentials, PostViewSet, PostImageViewSet, PostCreateAPIView, PostUpdateAPIView, PostDetailAPIView, CategoryViewSet, TagViewSet, CommentViewSet, me, logout
+from .views import test_upload_to_spaces, test_s3_credentials, CookieLoginView, PostViewSet, PostImageViewSet, PostCreateAPIView, PostUpdateAPIView, PostDetailAPIView, CategoryViewSet, TagViewSet, CommentViewSet, me, logout
 
 router = DefaultRouter()
 router.register(r'posts', PostViewSet, basename='posts')
@@ -19,6 +19,7 @@ urlpatterns = router.urls + posts_router.urls
 
 urlpatterns += [
     path('me/', me),
+    path("login/", CookieLoginView.as_view(), name="cookie_login"),
     path('logout/', logout),
     path('posts/<int:pk>/', PostDetailAPIView.as_view()),
     path('post/create/', PostCreateAPIView.as_view()),

@@ -13,7 +13,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 
-from blog.views import SimpleTokenObtainPairView
+from blog.views import SimpleTokenObtainPairView, CookieJWTAuthentication
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -26,7 +26,7 @@ def api_root(request, format=None):
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('blog.urls')),  # API routes
-    path('api/token/', SimpleTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
 

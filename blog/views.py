@@ -13,6 +13,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.views import APIView
 
@@ -83,7 +84,7 @@ def test_s3_credentials(request):
         return JsonResponse({'success': False, 'error': f'Unexpected error: {str(e)}'})
     
 
-
+### OLD CODE ###
 class SimpleTokenObtainPairView(TokenObtainPairView):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
@@ -95,6 +96,30 @@ class SimpleTokenObtainPairView(TokenObtainPairView):
             'access': response.data['access'],
             'refresh': response.data['refresh']
         }, status=status.HTTP_200_OK)
+    
+
+class CookieLoginView(TokenObtainPairView):
+    def post(self, request, *args, **kwargs):
+        # Let SimpleJWT create the tokens
+        resp = super().post(request, *args, **kwargs)
+        if resp.status_code != 200:
+            return resp
+
+        access = resp.data.get("access")
+        refresh = resp.data.get("refresh")
+
+        out = Response({"ok": True})
+        # Adjust attributes to your deployment (domain, max_age, samesite)
+        out.set_cookie(
+            "access_token", access,
+            httponly=True, secure=True, samesite="Lax", path="/", max_age=60*60
+        )
+        out.set_cookie(
+            "refresh_token", refresh,
+            httponly=True, secure=True, samesite="Lax", path="/", max_age=60*60*24
+        )
+        return out
+
     
 
 @api_view(['GET'])
